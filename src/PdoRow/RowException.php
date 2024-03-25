@@ -25,11 +25,6 @@ class RowException extends RuntimeException
      * @param                $code
      * @param Throwable|null $previous
      */
-    /**
-     * @param                $message
-     * @param                $code
-     * @param Throwable|null $previous
-     */
     #[Pure]
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
