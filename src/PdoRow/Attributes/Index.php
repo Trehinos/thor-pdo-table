@@ -33,7 +33,9 @@ class Index
     }
 
     /**
-     * Gets the index's name.
+     * Gets the index name.
+     *
+     * @return string Constraint/index identifier.
      */
     public function getName(): string
     {
@@ -41,7 +43,9 @@ class Index
     }
 
     /**
-     * Gets the column names of this index.
+     * Gets the column names that compose this index.
+     *
+     * @return array<int,string> Column names in index order.
      */
     public function getColumnNames(): array
     {
@@ -49,7 +53,9 @@ class Index
     }
 
     /**
-     * Returns true if the index is an unique index.
+     * Indicates whether this index enforces uniqueness.
+     *
+     * @return bool True for UNIQUE index, false for a non-unique index.
      */
     public function isUnique(): bool
     {
@@ -57,7 +63,10 @@ class Index
     }
 
     /**
-     * Gets the constraint's SQL.
+     * Builds a SQL fragment representing this index definition.
+     * Note: The exact emission may be adapted by drivers; this is a generic form.
+     *
+     * @return string SQL fragment like: "CONSTRAINT [UNIQUE] INDEX name (col1, col2)".
      */
     #[Pure]
     public function getSql(): string

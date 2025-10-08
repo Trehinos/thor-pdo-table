@@ -17,10 +17,13 @@ use Thor\Database\PdoTable\{PdoRow\Attributes\Index, PdoRow\Attributes\Column, P
 trait HasIdTrait
 {
 
+    /**
+     * Internal numeric identifier (auto-incremented primary key).
+     */
     protected ?int $id = null;
 
     /**
-     * Gets the public_id of this class.
+     * Gets the internal numeric identifier of this row.
      *
      * @throws Exception
      */

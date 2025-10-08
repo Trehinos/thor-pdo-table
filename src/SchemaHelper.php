@@ -37,6 +37,8 @@ final class SchemaHelper
 
     /**
      * Create the table in the database.
+     *
+     * @return bool|string True if executed successfully; or SQL string when debug mode is enabled.
      */
     public function createTable(): bool|string
     {
@@ -64,6 +66,7 @@ final class SchemaHelper
     /**
      * Drop the table in the database.
      *
+     * @return bool|string True if executed successfully; or SQL string when debug mode is enabled.
      * @throws ReflectionException
      */
     public function dropTable(): bool|string

@@ -35,7 +35,9 @@ class ForeignKey
     }
 
     /**
-     * Gets the foreign key name.
+     * Gets the foreign key constraint name.
+     *
+     * @return string Constraint identifier.
      */
     public function getName(): string
     {
@@ -53,7 +55,9 @@ class ForeignKey
     }
 
     /**
-     * Gets a list of target column names.
+     * Gets the column names referenced on the target (foreign) table.
+     *
+     * @return array<int,string> Target column names.
      */
     public function getTargetColumns(): array
     {
@@ -61,7 +65,9 @@ class ForeignKey
     }
 
     /**
-     * Gets the local columns names of the foreign relation.
+     * Gets the local (current table) column names participating in the relation.
+     *
+     * @return array<int,string> Local column names.
      */
     public function getLocalColumns(): array
     {

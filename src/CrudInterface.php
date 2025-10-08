@@ -90,6 +90,15 @@ interface CrudInterface
      */
     public function readMultipleBy(Criteria $criteria): array;
 
+    /**
+     * Convert a list of primary key values into a Criteria object matching those keys.
+     *
+     * The order of provided values must match the order of the table primary columns.
+     *
+     * @param array $primaries Ordered list of primary key values.
+     *
+     * @return Criteria Criteria object that can be used to query/update/delete the row.
+     */
     public function primaryArrayToCriteria(array $primaries): Criteria;
 
     /**

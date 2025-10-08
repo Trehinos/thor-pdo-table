@@ -18,6 +18,9 @@ use Thor\Database\PdoTable\{PdoRow\Attributes\Index, PdoRow\Attributes\Column, P
 trait HasPublicIdTrait
 {
 
+    /**
+     * Public identifier suitable for exposure (e.g., GUID/UUID string).
+     */
     protected ?string $public_id = null;
 
     /**

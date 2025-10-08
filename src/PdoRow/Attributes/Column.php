@@ -32,7 +32,12 @@ class Column
     }
 
     /**
-     * Transforms the $sqlValue to a PHP value with this object callable.
+     * Converts a raw SQL value coming from the database into the corresponding PHP value
+     * according to this column's TableType.
+     *
+     * @param mixed $sqlValue Raw value as fetched from PDO/SQL.
+     *
+     * @return mixed PHP-typed value ready to be used in the domain model.
      */
     public function toPhp(mixed $sqlValue): mixed
     {
@@ -40,7 +45,12 @@ class Column
     }
 
     /**
-     * Transforms the $phpValue to an SQL value with this object callable.
+     * Converts a PHP value to the corresponding SQL-storable representation
+     * according to this column's TableType.
+     *
+     * @param mixed $phpValue PHP-typed value from the domain model.
+     *
+     * @return mixed Value suitable for binding to PDO.
      */
     public function toSql(mixed $phpValue): mixed
     {
@@ -48,7 +58,9 @@ class Column
     }
 
     /**
-     * Gets the defined PHP type.
+     * Gets the native PHP type for values of this column.
+     *
+     * @return string PHP scalar/class type as declared by the TableType.
      */
     public function getPhpType(): string
     {
@@ -56,7 +68,9 @@ class Column
     }
 
     /**
-     * Returns true if this column is nullable.
+     * Indicates whether this column accepts NULL values.
+     *
+     * @return bool True if the column is nullable; false otherwise.
      */
     public function isNullable(): bool
     {
@@ -64,7 +78,9 @@ class Column
     }
 
     /**
-     * The default value of this column.
+     * Gets the default value of this column when none is provided.
+     *
+     * @return mixed|null The default value or null when not defined.
      */
     public function getDefault(): mixed
     {
@@ -72,7 +88,9 @@ class Column
     }
 
     /**
-     * Gets the name of the SQL column.
+     * Gets the SQL column identifier (name).
+     *
+     * @return string Column name as used in the database schema.
      */
     public function getName(): string
     {
@@ -80,7 +98,9 @@ class Column
     }
 
     /**
-     * Gets the defined SQL type.
+     * Gets the SQL type declaration associated with this column.
+     *
+     * @return string SQL type (dialect-independent mnemonic) from the TableType.
      */
     public function getSqlType(): string
     {

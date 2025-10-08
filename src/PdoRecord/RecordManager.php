@@ -8,21 +8,34 @@ use Thor\Database\PdoTable\Driver\DriverInterface;
 use Thor\Database\PdoTable\PdoRow\RowInterface;
 use Thor\Database\PdoTable\SchemaHelper;
 
+/**
+ * Aggregates the CrudHelper and SchemaHelper required by a Record.
+ *
+ * This lightweight service bundles access to data operations (via CrudHelper)
+ * and DDL generation/execution (via SchemaHelper) so Record instances can be
+ * constructed with a single dependency.
+ */
 final readonly class RecordManager
 {
 
-    public function __construct(public CrudHelper $crud, public  SchemaHelper $schema) {}
+    /**
+     * Create a new manager bundling CRUD and schema helpers.
+     *
+     * @param CrudHelper   $crud   Helper for data operations on the given row class.
+     * @param SchemaHelper $schema Helper for DDL generation/execution for the given row class.
+     */
+    public function __construct(public CrudHelper $crud, public SchemaHelper $schema) {}
 
     /**
-     * @template T
-     * @template-implements RowInterface
-     * @template-implements RecordInterface
+     * Factory that wires helpers and instantiates a concrete Record class.
      *
-     * @param DriverInterface $driver
-     * @param Requester $requester
-     * @param class-string<T> $class
+     * @template T of RowInterface
      *
-     * @return RecordInterface
+     * @param DriverInterface   $driver    SQL dialect driver used by SchemaHelper.
+     * @param Requester         $requester PDO requester used by CrudHelper.
+     * @param class-string<T>   $class     Fully-qualified class name of the record to instantiate.
+     *
+     * @return T An instance of the provided class, constructed with a RecordManager.
      */
     public static function create(DriverInterface $driver, Requester $requester, string $class): object
     {

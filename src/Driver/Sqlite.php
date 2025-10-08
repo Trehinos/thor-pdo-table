@@ -7,6 +7,9 @@ use Thor\Database\PdoTable\PdoRow\Attributes\Table;
 use Thor\Database\PdoTable\PdoRow\AttributesReader;
 use Thor\Database\PdoTable\PdoRow\Attributes\Column;
 
+/**
+ * SQLite dialect implementation for generating DDL from PdoRow attributes.
+ */
 class Sqlite implements DriverInterface
 {
 

@@ -7,26 +7,27 @@ use RuntimeException;
 use JetBrains\PhpStorm\Pure;
 
 /**
- * This class describes a RuntimeException thrown by the Thor's PdoTable module.
+ * Exception type for runtime errors in the PdoTable Row subsystem.
  *
+ * @package          Thor/Database/PdoTable
  *
- * @package   Thor\Database\PdoExtension
- *
- * @since     2020-10
- * @version   1.0
- * @author    Trehinos
- * @license   MIT
+ * @since            2020-10
+ * @version          1.0
+ * @author           Trehinos
+ * @license          MIT
  */
 class RowException extends RuntimeException
 {
 
     /**
-     * @param                $message
-     * @param                $code
-     * @param Throwable|null $previous
+     * Construct a RowException.
+     *
+     * @param string          $message  Error message.
+     * @param int             $code     Error code.
+     * @param Throwable|null  $previous Previous exception for chaining.
      */
     #[Pure]
-    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    public function __construct(string $message = "", int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

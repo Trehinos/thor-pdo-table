@@ -27,14 +27,29 @@ use Thor\Database\PdoTable\PdoRow\RowInterface;
 final class CrudHelper implements CrudInterface
 {
 
+    /**
+     * Low-level array-based CRUD executor used to perform SQL operations.
+     */
     private ArrayCrud $arrayCrud;
-    private array     $primary;
+
+    /**
+     * Ordered list of primary key column names for the managed table.
+     * Used to build Criteria and primary strings.
+     *
+     * @var string[]
+     */
+    private array $primary;
 
     /**
      * CrudHelper constructor.
-     * Creates a new CRUD requester to manage PdoRows
+     * Creates a new CRUD requester to manage PdoRows.
      *
-     * @param class-string<T> $className which implements PdoRowInterface and use PdoRowTrait trait.
+     * @param class-string<T> $className Class that implements RowInterface and uses PdoRowTrait.
+     * @param Requester       $requester  PDO requester used to execute queries.
+     * @param string[]        $insertExcludedColumns Column names to exclude from INSERT statements.
+     * @param string[]        $updateExcludedColumns Column names to exclude from UPDATE statements.
+     *
+     * @throws TypeError If the provided class does not exist or does not implement RowInterface.
      */
     public function __construct(
         private readonly string $className,
@@ -56,6 +71,11 @@ final class CrudHelper implements CrudInterface
         );
     }
 
+    /**
+     * Get the underlying Requester used by this CRUD helper.
+     *
+     * @return Requester
+     */
     public function getRequester(): Requester
     {
         return $this->arrayCrud->getRequester();

@@ -8,6 +8,9 @@ use Thor\Database\PdoTable\PdoRow\Attributes\Table;
 use Thor\Database\PdoTable\PdoRow\AttributesReader;
 use Thor\Database\PdoTable\PdoRow\Attributes\Column;
 
+/**
+ * MySQL dialect implementation for generating DDL from PdoRow attributes.
+ */
 class MySql implements DriverInterface
 {
 

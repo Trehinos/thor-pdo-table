@@ -30,6 +30,8 @@ class Table
 
     /**
      * Returns the SQL table name.
+     *
+     * @return string|null Explicit table name or null to derive it from the class name.
      */
     public function getTableName(): ?string
     {
@@ -37,7 +39,9 @@ class Table
     }
 
     /**
-     * Returns the primary keys of the class.
+     * Returns the primary key column names.
+     *
+     * @return array<int,string> List of primary key columns in order.
      */
     public function getPrimaryKeys(): array
     {
@@ -45,7 +49,9 @@ class Table
     }
 
     /**
-     * Returns the auto-increment column name. Can be null if none is defined.
+     * Returns the auto-increment column name if any.
+     *
+     * @return string|null Auto-increment column or null when not applicable.
      */
     public function getAutoColumnName(): ?string
     {

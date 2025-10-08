@@ -2,11 +2,20 @@
 
 namespace Thor\Database\PdoTable\PdoRow\TableType;
 
+/**
+ * TableType for integer values stored in INTEGER(n) columns.
+ *
+ * @package          Thor/Database/PdoTable
+ * @copyright (2021) Sébastien Geldreich
+ * @license          MIT
+ */
 class IntegerType extends BaseType
 {
 
     /**
-     * @param int $size
+     * Create an IntegerType with a given display size.
+     *
+     * @param int $size Size hint for the SQL INTEGER definition (e.g. 10 -> INTEGER(10)).
      */
     public function __construct(public readonly int $size = 10)
     {
@@ -14,9 +23,11 @@ class IntegerType extends BaseType
     }
 
     /**
-     * @param mixed $sqlValue
+     * Cast the SQL value to an integer for PHP.
      *
-     * @return int
+     * @param mixed $sqlValue Raw SQL value.
+     *
+     * @return int PHP integer.
      */
     public function toPhpValue(mixed $sqlValue): int
     {
@@ -24,9 +35,11 @@ class IntegerType extends BaseType
     }
 
     /**
-     * @param mixed $phpValue
+     * Cast a PHP value to integer for SQL storage.
      *
-     * @return int
+     * @param mixed $phpValue PHP value to cast to int.
+     *
+     * @return int Integer value.
      */
     public function toSqlValue(mixed $phpValue): int
     {

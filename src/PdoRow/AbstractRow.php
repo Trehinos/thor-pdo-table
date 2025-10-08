@@ -6,14 +6,17 @@ use Thor\Database\PdoTable\HasPublicId;
 use Thor\Database\PdoTable\HasPublicIdTrait;
 
 /**
- * Merges BasePdoRow and HasPublicId.
+ * Extension of Row that also implements HasPublicId via HasPublicIdTrait.
  *
- * @see Row
- * @see HasPublicIdTrait
+ * Use this as a base when your table rows expose a public identifier distinct
+ * from their primary key.
  *
- * @package Thor/Database/PdoTable
+ * @see              Row
+ * @see              HasPublicIdTrait
+ *
+ * @package          Thor/Database/PdoTable
  * @copyright (2021) Sébastien Geldreich
- * @license MIT
+ * @license          MIT
  */
 abstract class AbstractRow extends Row implements HasPublicId
 {
@@ -21,8 +24,10 @@ abstract class AbstractRow extends Row implements HasPublicId
     use HasPublicIdTrait;
 
     /**
-     * @param string|null $public_id
-     * @param array       $primaries
+     * Construct an AbstractRow, setting the optional public identifier and initial primary keys.
+     *
+     * @param string|null                       $public_id Public identifier to expose (distinct from primary key).
+     * @param array<string, scalar|null>        $primaries Map of primary key column => value.
      */
     public function __construct(?string $public_id = null, array $primaries = [])
     {

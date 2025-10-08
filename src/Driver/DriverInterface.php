@@ -6,6 +6,12 @@ use Thor\Database\PdoTable\PdoRow\Attributes\Index;
 use Thor\Database\PdoTable\PdoRow\Attributes\Table;
 use Thor\Database\PdoTable\PdoRow\Attributes\Column;
 
+/**
+ * Abstraction for SQL dialect-specific DDL generation for PdoTable.
+ *
+ * Implementations generate CREATE TABLE and CREATE INDEX statements based on
+ * attributes declared on PdoRow classes.
+ */
 interface DriverInterface
 {
 

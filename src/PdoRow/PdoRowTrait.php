@@ -10,26 +10,41 @@ use Thor\Database\PdoTable\PdoRow\Attributes\Table;
 use Thor\Database\PdoTable\PdoRow\Attributes\Column;
 
 /**
- * Trait PdoRowTrait: implements PdoRowInterface with Pdo Attributes.
+ * Trait PdoRowTrait: implements RowInterface using PHP 8 attributes.
  *
- * @package   Thor\Database\PdoTable
+ * Provides default implementations for schema metadata discovery and
+ * hydration/serialization of rows using Column/Index/Table attributes.
  *
- * @since     2020-10
- * @version   1.0
- * @author    Trehinos
- * @copyright Author
- * @license   MIT
- * @implements RowInterface
+ * @package          Thor/Database/PdoTable
+ *
+ * @since            2020-10
+ * @version          1.0
+ * @author           Trehinos
+ * @copyright        Author
+ * @license          MIT
+ * @implements       RowInterface
  */
 trait PdoRowTrait
 {
 
+    /**
+     * Cache of discovered table attributes per row class.
+     *
+     * @var array<class-string, array{table: Table, columns: array<string, Column>, indexes: array<int, Index>, foreign_keys: array}>
+     */
     private static array $tablesAttributes = [];
 
+    /**
+     * Former primary key values as loaded from DB (used to detect key changes).
+     *
+     * @var array<string, scalar|null>
+     */
     protected array $formerPrimaries = [];
 
     /**
-     * @param array $primaries
+     * Construct a row with optional initial primary key values.
+     *
+     * @param array<string, scalar|null> $primaries Map of primary key column => value.
      */
     public function __construct(
         protected array $primaries = []
@@ -37,8 +52,9 @@ trait PdoRowTrait
     }
 
     /**
-     * @return Index[] an array of PdoIndex containing indexes information.
+     * Gets the declared indexes for this row's table.
      *
+     * @return array<int, Index> List of Index attribute instances.
      * @throws ReflectionException
      */
     final public static function getIndexes(): array
@@ -49,6 +65,7 @@ trait PdoRowTrait
     /**
      * Gets all Thor\Database\PdoTable\Attributes\Pdo* attributes.
      *
+     * @return array{table: Table, columns: array<string, Column>, indexes: array<int, Index>, foreign_keys: array}
      * @throws ReflectionException
      */
     #[ArrayShape(['table' => Table::class, 'columns' => 'array', 'indexes' => 'array', 'foreign_keys' => 'array'])]
@@ -58,9 +75,12 @@ trait PdoRowTrait
     }
 
     /**
-     * @return array an array representation of this object which is the same as it would be returned by
-     *               PDOStatement::fetch().
+     * Returns an associative array representation of this object compatible with PDOStatement::fetch().
      *
+     * Keys are column names and values are SQL-typed values obtained by converting PHP properties
+     * through their corresponding Column TableType.
+     *
+     * @return array<string, mixed>
      * @throws ReflectionException
      */
     public function toPdoArray(): array
@@ -78,8 +98,9 @@ trait PdoRowTrait
     }
 
     /**
-     * @return array an array of 'column_name' => 'SQL_COLUMN_TYPE(SIZE)'.
+     * Returns declared column definitions keyed by column name.
      *
+     * @return array<string, Column> Map of column name => Column attribute instance.
      * @throws ReflectionException
      */
     final public static function getPdoColumnsDefinitions(): array
@@ -111,10 +132,15 @@ trait PdoRowTrait
     }
 
     /**
-     * This method hydrates the object from the $pdoArray array.
+     * Hydrates the object from the provided associative array of column => SQL-typed value.
      *
-     * If $fromDb is true, this equality MUST be true :  getFormerPrimary() === getPrimary(), after this method.
+     * If $fromDb is true, then after hydration the former primary and current primary are equal
+     * (getFormerPrimary() === getPrimary()).
      *
+     * @param array<string, mixed> $pdoArray Associative array of column => SQL-typed value.
+     * @param bool                 $fromDb   Whether the data originates from the database.
+     *
+     * @return void
      * @throws ReflectionException
      */
     public function fromPdoArray(array $pdoArray, bool $fromDb = false): void
@@ -169,7 +195,11 @@ trait PdoRowTrait
     }
 
     /**
-     * Sets primary key(s).
+     * Sets primary key value(s).
+     *
+     * @param array<string, scalar|null> $primary Map of primary key column => value.
+     *
+     * @return void
      */
     final public function setPrimary(array $primary): void
     {
