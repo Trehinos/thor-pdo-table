@@ -1,7 +1,7 @@
 {
   "name": "trehinos/thor-pdo-table",
   "type": "library",
-  "description": "Une bibliothèque d'utilitaires de base de données. Light-ORM.",
+  "description": "A simple table abstraction for PDO.",
   "minimum-stability": "dev",
   "license": "MIT",
   "autoload": {
